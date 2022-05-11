@@ -23,10 +23,10 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
           })};
         </Select>
       )
-    case "boolean":
-      return null
+    // case "boolean":
+      // return null
   }
-  return <>Unknown field type: {setting.type} </>
+  return <>Unknown field type</>
 }
 
 export interface FieldProps {
