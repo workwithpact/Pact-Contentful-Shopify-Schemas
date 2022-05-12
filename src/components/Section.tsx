@@ -4,6 +4,7 @@ import { useSDK, useFieldValue } from '@contentful/react-apps-toolkit';
 import { Button, Card, Form, FormControl, Heading, Menu, TextInput } from "@contentful/f36-components";
 import Field from "./Field";
 import Settings from "./Settings";
+import BlocksList from "./BlocksList";
 
 const Section = ({ config, field }: SectionProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -57,34 +58,13 @@ const Section = ({ config, field }: SectionProps) => {
             </>
           )
         }
-        {
-          (value?.blocks || []).map((block:any, index: number) => {
-            const matchingConfig = config?.config?.blocks?.find((b:any) => b.type === block.type);
-            return (
-              <Card key={`${config.field}|${index}`}>
-                <Heading>{block.settings?.title || matchingConfig?.name || `Unknown block ${block.type}`}</Heading>
-                <Settings
-                  config={matchingConfig}
-                  settings={matchingConfig?.settings || []}
-                  value={block}
-                  setValue={(newValue: any) => {
-                    const currentBlocks = value?.blocks || [];
-                    currentBlocks[index] = {
-                      ...(block || {}),
-                      ...newValue || {}
-                    }
-                    setValue({
-                      ...(value || {}),
-                      blocks: [
-                        ...currentBlocks
-                      ]
-                    })
-                  }}
-                />
-              </Card>
-            )
-          })
-        }
+        <BlocksList 
+          blocks={value?.blocks || []} 
+          config={config} 
+          onChange={(newBlocks) => setValue({
+            ...(value || {}),
+            blocks: [...newBlocks]
+          })} />
       </Card>
     </div>
   )
