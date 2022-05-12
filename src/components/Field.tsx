@@ -1,4 +1,4 @@
-import { TextInput, Select, Textarea, Subheading, Text, Checkbox } from "@contentful/f36-components";
+import { TextInput, Select, Textarea, Subheading, Text, Checkbox, Radio, Stack } from "@contentful/f36-components";
 import React from "react";
 
 const Field = ({ setting, value, onChange }: FieldProps) => {
@@ -34,6 +34,17 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
             );
           })};
         </Select>
+      )
+    case "radio":
+      return (
+        <Stack flexDirection="row">
+          {(setting.options || []).map((option: any, i:number) => {
+            return (
+              <Radio onChange={handleOnChange} isChecked={(option?.value === value || option === value)} key={i} value={typeof option.value !== 'undefined' ? option.value : option}>{option?.label || option?.value || option}</Radio>
+            );
+          })}
+        </Stack>
+        
       )
     // case "boolean":
       // return null
