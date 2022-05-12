@@ -1,5 +1,5 @@
 import { TextInput, Select, Textarea, Subheading, Text, Checkbox, Radio, Stack } from "@contentful/f36-components";
-import React from "react";
+import RichtextField from "./RichtextField";
 
 const Field = ({ setting, value, onChange }: FieldProps) => {
   const handleOnChange = (event:any) => onChange && event?.target ?  onChange((event.target as any).value) : null;
@@ -8,8 +8,6 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
       return setting.content ? <Subheading>{setting.content}</Subheading> : null;
     case "paragraph": 
       return setting.content ? <Text>{setting.content}</Text> : null;
-    case "text":
-      return <TextInput value={value} onChange={handleOnChange} />;
     case "checkbox":
       return <Checkbox
         isChecked={value}
@@ -19,8 +17,14 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
       </Checkbox>
     case "textarea":
       return <Textarea value={value} onChange={handleOnChange} />;
+    case "richtext":
+        return <RichtextField value={value} onChange={handleOnChange} />;
     case "number":
-      return <TextInput type="number" min={setting.min || null} max={setting.max || null} value={value} onChange={handleOnChange} />;
+    case "text":
+    case "url":
+    case "password":
+    case "search":
+      return <TextInput type={setting.type} min={setting.min || null} max={setting.max || null} value={value} onChange={handleOnChange} />;
     case "select":
       return (
         <Select
