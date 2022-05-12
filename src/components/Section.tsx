@@ -3,6 +3,7 @@ import { EditorExtensionSDK } from '@contentful/app-sdk';
 import { useSDK, useFieldValue } from '@contentful/react-apps-toolkit';
 import { Button, Card, Form, FormControl, Heading, Menu, TextInput } from "@contentful/f36-components";
 import Field from "./Field";
+import Settings from "./Settings";
 
 const Section = ({ config, field }: SectionProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -21,38 +22,7 @@ const Section = ({ config, field }: SectionProps) => {
     }}>
       <Card>
         <Heading>{config?.config?.name || 'Section Settings'}</Heading>
-        <Form>
-          {settings.map((setting: any) => {
-            let fieldValue = typeof setting.default !== 'undefined' ? setting.default : ''; 
-            if (value && value.settings && typeof value.settings[setting.id] !== 'undefined' && value.settings[setting.id] !== null) {
-              fieldValue = value.settings[setting.name]
-            }
-            console.log({fieldValue, config, setting})
-            return (
-              <FormControl key={`${config.field}|${setting.id}`}>
-                <FormControl.Label>{setting.label}</FormControl.Label>
-                <Field 
-                  setting={setting} 
-                  value={fieldValue} 
-                  onChange={(newValue: string) => {
-                    setValue({
-                      ...(value || {}), 
-                      settings: {
-                        ...(value?.settings || {}),
-                        [setting.id]: newValue
-                      }
-                    })
-                  }}
-                 />
-                {setting?.info ? 
-                  <FormControl.HelpText>
-                    {setting.info}
-                  </FormControl.HelpText> : null
-                }
-              </FormControl>
-            );
-          })}
-        </Form>
+        <Settings settings={settings} value={value} setValue={setValue} config={config} />
 
         {
           !blocks.length ? null : (
@@ -93,6 +63,24 @@ const Section = ({ config, field }: SectionProps) => {
             return (
               <Card key={`${config.field}|${index}`}>
                 <Heading>{block.settings?.title || matchingConfig?.name || `Unknown block ${block.type}`}</Heading>
+                <Settings
+                  config={matchingConfig}
+                  settings={matchingConfig?.settings || []}
+                  value={block}
+                  setValue={(newValue: any) => {
+                    const currentBlocks = value?.blocks || [];
+                    currentBlocks[index] = {
+                      ...(block || {}),
+                      ...newValue || {}
+                    }
+                    setValue({
+                      ...(value || {}),
+                      blocks: [
+                        ...currentBlocks
+                      ]
+                    })
+                  }}
+                />
               </Card>
             )
           })
@@ -100,7 +88,6 @@ const Section = ({ config, field }: SectionProps) => {
       </Card>
     </div>
   )
-  return <h1>Hello {field.toString()} {config.toString()}</h1>
 };
 
 export interface SectionProps {
