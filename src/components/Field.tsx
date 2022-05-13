@@ -2,7 +2,11 @@ import { TextInput, Select, Textarea, Subheading, Text, Checkbox, Radio, Stack }
 import RichtextField from "./RichtextField";
 
 const Field = ({ setting, value, onChange }: FieldProps) => {
-  const handleOnChange = (event:any) => onChange && event?.target ?  onChange((event.target as any).value) : null;
+  const handleOnChange = (event:any) => {
+    if(onChange && event?.target){
+      onChange(event.target.type === 'checkbox' ? event.target.checked : (event.target as any).value)
+    }
+  };
   switch (setting.type) {
     case "header": 
       return setting.content ? <Subheading>{setting.content}</Subheading> : null;
