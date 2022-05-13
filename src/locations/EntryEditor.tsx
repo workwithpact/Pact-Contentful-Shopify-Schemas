@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Flex, Text, Spinner } from '@contentful/f36-components';
 import { EditorExtensionSDK } from '@contentful/app-sdk';
-import { useCMA, useSDK, useFieldValue } from '@contentful/react-apps-toolkit';
+import { useCMA, useSDK } from '@contentful/react-apps-toolkit';
 import Section from '../components/Section';
 
 const Entry = () => {
@@ -47,7 +47,7 @@ const Entry = () => {
           const parts = model.split(':');
           const type = parts.shift();
           const field = parts.shift() || '';
-          if (type === currentType || type === '*' && fields[field]) {
+          if (type === currentType || (type === '*' && fields[field])) {
             finalConfig[field] = {
               name: currentConfig.title,
               ...currentConfig.config
@@ -64,7 +64,7 @@ const Entry = () => {
       })
       setConfig(configArray)
     });
-  }, [cma]);
+  }, [cma, sdk.entry]);
   return config ? (
     config?.length ? <>{config.map((conf) => <Section field={sdk.entry.fields[conf.field]} config={conf} key={conf.field} />)}</> : <Text>Oops, no config found for this content type</Text>
   ) : (

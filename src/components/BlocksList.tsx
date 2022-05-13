@@ -1,7 +1,5 @@
-import { Card, Heading } from "@contentful/f36-components";
 import React from "react";
 import Block from "./Block";
-import Settings from "./Settings";
 
 const BlocksList = ({blocks, config, onChange}: BlocksListProps)  => {
   return (

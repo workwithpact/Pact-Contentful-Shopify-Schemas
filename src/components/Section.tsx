@@ -1,21 +1,14 @@
-import React, { useEffect } from "react";
-import { EditorExtensionSDK } from '@contentful/app-sdk';
-import { useSDK, useFieldValue } from '@contentful/react-apps-toolkit';
-import { Button, Card, Form, FormControl, Heading, Menu, TextInput } from "@contentful/f36-components";
-import Field from "./Field";
+import React, { useState } from "react";
+import { useFieldValue } from '@contentful/react-apps-toolkit';
+import { Button, Card, Heading, Menu } from "@contentful/f36-components";
 import Settings from "./Settings";
 import BlocksList from "./BlocksList";
 
 const Section = ({ config, field }: SectionProps) => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const sdk = useSDK<EditorExtensionSDK>();
   const settings = config?.config?.settings || [];
   const blocks = config?.config?.blocks || [];
   const [value, setValue] = useFieldValue<any>(config.field);
-  console.log({value})
-  useEffect(() => {
-    console.log({config, field, value})
-  }, [])
+  const [isExpanded, setIsExpanded] = useState(false);
   return (
     <div style={{
       width:'90%',
