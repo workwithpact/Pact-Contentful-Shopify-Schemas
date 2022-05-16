@@ -1,30 +1,34 @@
-import {  Card, Menu, ModalConfirm, Text } from "@contentful/f36-components";
+import { Card, Collapse, Menu, ModalConfirm, Text } from "@contentful/f36-components";
 import React, { useState } from "react";
 import Settings from "./Settings";
 import * as icons from '@contentful/f36-icons';
 
 const defaultIcon = 'SettingsIcon';
 console.log({icons})
-const Block = ({block, config, isExpanded, onChange, onRemove} : BlockProps) => {
+const Block = ({block, config, onChange, onRemove} : BlockProps) => {
   const [isModalShown, setModalShown] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   
   return (
     <>
       <Card 
         title={block.settings?.title || config?.name || `Unknown block ${block.type}`}
         icon={(icons as any)[config?.icon || defaultIcon]}
+        onClick={() => setIsExpanded(!isExpanded)}
         actions={[
           <Menu.Item onClick={() => setModalShown(true)}>Delete Block</Menu.Item>
         ]}
       >
-        <Settings
-          config={config}
-          settings={config?.settings || []}
-          value={block}
-          setValue={(newValue: any) => {
-            onChange(newValue);
-          }}
-        />
+        <Collapse isExpanded={isExpanded}>
+          <Settings
+            config={config}
+            settings={config?.settings || []}
+            value={block}
+            setValue={(newValue: any) => {
+              onChange(newValue);
+            }}
+          />
+        </Collapse>
       </Card>
       <ModalConfirm
         intent="negative"
@@ -46,7 +50,6 @@ const Block = ({block, config, isExpanded, onChange, onRemove} : BlockProps) => 
 export interface BlockProps {
   block: any;
   config: any;
-  isExpanded: boolean;
   onChange: (newValue: any) => void;
   onRemove: (newValue: any) => void;
 }

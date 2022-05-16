@@ -12,7 +12,6 @@ const BlocksList = ({blocks, config, onChange}: BlocksListProps)  => {
               key={`${config.field}|${block.id}`}
               block={block}
               config={matchingConfig}
-              isExpanded={true}
               onRemove={() => {
                 onChange(blocks.filter((b:any) => b !== block))
               }}

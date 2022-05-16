@@ -28,7 +28,7 @@ const Section = ({ config, field }: SectionProps) => {
                 <hr />
                 <Menu>
                   <Menu.Trigger>
-                    <Button>Add block</Button>
+                    <Button isFullWidth style={{margin: "1rem 0"}}>Add block</Button>
                   </Menu.Trigger>
                   <Menu.List>
                     {
