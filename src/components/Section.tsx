@@ -4,10 +4,10 @@ import { Button, Card, Collapse, Flex, Heading, Menu } from "@contentful/f36-com
 import Settings from "./Settings";
 import BlocksList from "./BlocksList";
 
-const Section = ({ config, field }: SectionProps) => {
+const Section = ({ config, field, locale }: SectionProps) => {
   const settings = config?.config?.settings || [];
   const blocks = config?.config?.blocks || [];
-  const [value, setValue] = useFieldValue<any>(config.field);
+  const [value, setValue] = useFieldValue<any>(config.field, locale);
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <div style={{
@@ -71,6 +71,7 @@ const Section = ({ config, field }: SectionProps) => {
 export interface SectionProps {
   config: any;
   field: any;
+  locale?: any;
 }
 
 export default Section
