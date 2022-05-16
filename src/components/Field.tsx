@@ -60,7 +60,16 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
         
       )
     case "image_picker":
-      return <ResourcePicker value={value} type={setting.type || undefined} onChange={handleOnChange} />
+      return <ResourcePicker value={value} type={'asset'} onChange={handleOnChange} />
+    case "product":
+    case "article":
+    case "variant":
+    case "page":
+    case "blog":
+    case "collection":
+      return <ResourcePicker value={value} type={setting.type} onChange={handleOnChange} />
+    case "resource":
+        return <ResourcePicker value={value} type={setting.content_type || undefined} onChange={handleOnChange} />
   }
   return <>Unknown field type: {setting?.type}</>
 }
