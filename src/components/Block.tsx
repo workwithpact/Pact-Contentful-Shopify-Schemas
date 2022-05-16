@@ -1,4 +1,4 @@
-import { Card, Collapse, Menu, ModalConfirm, Text } from "@contentful/f36-components";
+import { Button, Card, Collapse, Menu, ModalConfirm, Text } from "@contentful/f36-components";
 import React, { useState } from "react";
 import Settings from "./Settings";
 import * as icons from '@contentful/f36-icons';
@@ -10,11 +10,9 @@ const Block = ({block, config, onChange, onRemove} : BlockProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
   return (
-    <>
       <Card 
         title={block.settings?.title || config?.name || `Unknown block ${block.type}`}
         icon={(icons as any)[config?.icon || defaultIcon]}
-        onClick={() => setIsExpanded(!isExpanded)}
         actions={[
           <Menu.Item onClick={() => setModalShown(true)}>Delete Block</Menu.Item>
         ]}
@@ -29,21 +27,21 @@ const Block = ({block, config, onChange, onRemove} : BlockProps) => {
             }}
           />
         </Collapse>
+        <Button size="small" style={{margin: "auto auto"}} onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? 'Collapse' : 'Expand'}</Button>
+        <ModalConfirm
+          intent="negative"
+          isShown={isModalShown}
+          onCancel={() => {
+            setModalShown(false);
+          }}
+          onConfirm={() => {
+            setModalShown(false);
+            onRemove(null);
+          }}
+        >
+          <Text>Do you really want to delete this block?</Text>
+        </ModalConfirm>
       </Card>
-      <ModalConfirm
-        intent="negative"
-        isShown={isModalShown}
-        onCancel={() => {
-          setModalShown(false);
-        }}
-        onConfirm={() => {
-          setModalShown(false);
-          onRemove(null);
-        }}
-      >
-        <Text>Do you really want to delete this block?</Text>
-      </ModalConfirm>
-    </>
   )
 }
 

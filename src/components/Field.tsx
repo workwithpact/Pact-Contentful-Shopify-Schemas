@@ -29,6 +29,10 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
     case "password":
     case "search":
       return <TextInput type={setting.type} min={setting.min || null} max={setting.max || null} value={value} onChange={handleOnChange} />;
+    case "range":
+      return <div>
+        <input type="range" value={value} min={setting.min || 0} max={setting.max || 100} step={setting.step || 1} onChange={handleOnChange} /> {value} {setting.unit}
+      </div>
     case "select":
       return (
         <Select

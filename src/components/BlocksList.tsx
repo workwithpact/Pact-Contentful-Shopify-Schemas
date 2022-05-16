@@ -1,5 +1,14 @@
+import { DragHandle, Flex } from "@contentful/f36-components";
 import React from "react";
 import Block from "./Block";
+
+const SortableList = ({children}: any) => (
+  <Flex flexDirection="column">{children}</Flex>
+);
+
+const SortableDragHandle = (() => (
+  <DragHandle style={{alignSelf: 'stretch'}} label="Move card" />
+));
 
 const BlocksList = ({blocks, config, onChange}: BlocksListProps)  => {
   return (
