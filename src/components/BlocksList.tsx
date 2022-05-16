@@ -13,6 +13,9 @@ const BlocksList = ({blocks, config, onChange}: BlocksListProps)  => {
               block={block}
               config={matchingConfig}
               isExpanded={true}
+              onRemove={() => {
+                onChange(blocks.filter((b:any) => b !== block))
+              }}
               onChange={(newValue: any) => {
                 const currentBlocks = blocks || [];
                   currentBlocks[index] = {
