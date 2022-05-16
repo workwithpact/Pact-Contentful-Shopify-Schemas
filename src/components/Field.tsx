@@ -1,4 +1,5 @@
 import { TextInput, Select, Textarea, Subheading, Text, Checkbox, Radio, Stack } from "@contentful/f36-components";
+import ResourcePicker from "./ResourcePicker";
 import RichtextField from "./RichtextField";
 
 const Field = ({ setting, value, onChange }: FieldProps) => {
@@ -58,8 +59,8 @@ const Field = ({ setting, value, onChange }: FieldProps) => {
         </Stack>
         
       )
-    // case "boolean":
-      // return null
+    case "image_picker":
+      return <ResourcePicker value={value} type={setting.type || undefined} onChange={handleOnChange} />
   }
   return <>Unknown field type: {setting?.type}</>
 }
