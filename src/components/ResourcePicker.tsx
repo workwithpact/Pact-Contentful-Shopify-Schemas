@@ -46,11 +46,11 @@ const ResourcePicker = ({value, type, onChange}:ResourcePickerProps) => {
   const handleOnChange = useCallback((value: string|null|undefined) => {
     onChange({
       target: {
-        value,
+        value: value ? `asset://${type === 'asset' ? 'asset' : 'entry'}/${value}` : null,
         type: 'EntrySelector'
       }
     })
-  }, [onChange]);
+  }, [onChange, type]);
   const handleSearchValueChange = useCallback((ev:any) => {
     if (debounceTimer?.current) {
       clearTimeout(debounceTimer.current);
@@ -73,12 +73,19 @@ const ResourcePicker = ({value, type, onChange}:ResourcePickerProps) => {
     if (value) {
       setLoading(true);
       ( async () => {
-        const loadedEntry = resourceCache[value] || await cma.entry.get(value)
-        setEntry(loadedEntry);
+        try {
+          const [entryType, entryId] = ((value+'').split('://').pop()+ '').split('/');
+          const loadedEntry = resourceCache[value] || await (cma as any)[entryType].get({
+            [`${entryType}Id`]: entryId
+          })
+          setEntry(loadedEntry);
+        } catch (e) {
+          console.error(e);
+        }
         setLoading(false);
       })();;
     }
-  }, [value])
+  }, [value, cma])
 
   const entryFile = entry ? getEntryField(entry, 'file') : null;
   return <div>

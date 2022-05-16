@@ -5,13 +5,13 @@ import Field from "./Field";
 const Settings = ({settings, value, setValue, config}: SettingsProps) => {
   return (
     <Form>
-      {settings.map((setting: any) => {
+      {settings.map((setting: any, index:number) => {
         let fieldValue = typeof setting.default !== 'undefined' ? setting.default : ''; 
         if (value && value.settings && typeof value.settings[setting.id] !== 'undefined' && value.settings[setting.id] !== null) {
           fieldValue = value.settings[setting.id]
         }
         return (
-          <FormControl key={`${config.field}|${setting.id}`}>
+          <FormControl key={`${config.field}|${setting.id}|${index}`}>
             <FormControl.Label>{setting.label}</FormControl.Label>
             <Field 
               setting={setting} 

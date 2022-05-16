@@ -4,15 +4,24 @@ import Settings from "./Settings";
 import * as icons from '@contentful/f36-icons';
 
 const defaultIcon = 'SettingsIcon';
-console.log({icons})
-const Block = ({block, config, onChange, onRemove} : BlockProps) => {
+const Block = ({block, config, onChange, onRemove, withDragHandle, dragHandleRender} : BlockProps) => {
   const [isModalShown, setModalShown] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   
   return (
       <Card 
         title={block.settings?.title || config?.name || `Unknown block ${block.type}`}
+        style={{
+          marginBottom: '10px',
+          padding: !isExpanded && withDragHandle ? '10px 10px 10px 30px' : undefined
+        }}
         icon={(icons as any)[config?.icon || defaultIcon]}
+        {
+          ...{
+            withDragHandle: !isExpanded && withDragHandle
+          }
+        }
+        dragHandleRender={!isExpanded && dragHandleRender}
         actions={[
           <Menu.Item onClick={() => setModalShown(true)}>Delete Block</Menu.Item>
         ]}
@@ -50,6 +59,8 @@ export interface BlockProps {
   config: any;
   onChange: (newValue: any) => void;
   onRemove: (newValue: any) => void;
+  withDragHandle?: boolean;
+  dragHandleRender?: any;
 }
 
 export default Block

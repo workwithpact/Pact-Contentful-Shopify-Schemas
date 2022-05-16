@@ -18,7 +18,6 @@ const Entry = () => {
         content_type: "customFieldDefinitions"
       }
     }).then((entries: any) => {
-      console.log({entries})
       const currentType = sdk.entry.getSys().contentType.sys.id;
       const fields = sdk.entry.fields;
       const matchingConfigs = (entries?.items || []).map((entry: any) => {
