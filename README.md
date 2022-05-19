@@ -1,3 +1,42 @@
+# Pact's Contentful Schema App
+
+## What is this?
+At [Pact](https://workwithpact.com/), we build a lot of Shopify sites. So much so, that we grew to think and speak in Shopify terms.
+We also build quite a few headless sites, leveraging Gatsby and Contentful.
+
+While Contentful is a very pwoerful and flexible platform, it's also kind of limiting in terms of how many Content Types you can create.
+
+We decided to apply Shopify's Settings Schema logic to Contentful.
+
+## How do I install it?
+Simple! 
+
+Head over to your Contentful Organization's Apps page and click Create app:
+![Apps page](docs/01.png)
+
+Give you app a name. Any name works! Then click "Create app".
+![Apps page](docs/02.png)
+
+In the app configuration screen, make sure to:
+- Put in `https://contentful-schema-app.workwithpact.com/` as the public URL.
+- Select the "Entry field" location, as well as the "JSON object" field
+- Select the "Entry editor" location
+- Click Save
+
+![Apps page](docs/03.png)
+
+Next, click on actions -> Install to Space -> select your space and environment -> Continue
+![Apps page](docs/04.png)
+
+Now, it't time to create a new Content Type. From your Space, head over to `Content model` and click on `Add content type`
+Give it the name `Custom Field Definitions` and the API identifier `customFieldDefinitions`. Create it.
+
+Next, add a `title` field of `Text` type.
+
+![Apps page](docs/05.png)
+
+## 
+
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
 ## Available Scripts
